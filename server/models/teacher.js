@@ -1,6 +1,36 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const enu = {
+    values: ['A', 'B', 'C', 'D', 'E']
+  , message: 'Invalid Section in Class'
+}
+
+function classesEmptyValidator(classes) {
+    if(classes[0] == "" || classes.length <= 0){
+        return false;
+    }
+    return true;
+}
+
+
+const classSchema = mongoose.Schema({
+    year: {
+        type: Number,
+        required: [true, "Year Is Required in Class"],
+        min: [1, 'Invalid Year in Class'],
+        max: [4 , 'Invalid Year in Class']
+    },
+    section: {
+        type: String,
+        enum: enu,
+        required: [true, "Section is Required in Class"]
+    }
+}, {
+    _id: false
+});
+
+
 const TeacherSchema = mongoose.Schema({
     firstname: {
         type: String,
@@ -10,8 +40,14 @@ const TeacherSchema = mongoose.Schema({
         type: String,
     },
     classes: {
-        type: [String],
-        required: [true, "Class is Required"]
+        type: [classSchema],
+        required: [true, "Class is Required"],
+        validate: [
+            {
+                validator: classesEmptyValidator,
+                msg: "Class is Required"
+            }
+        ]
     },
     email: {
         type: String,
@@ -28,7 +64,7 @@ const TeacherSchema = mongoose.Schema({
     timestamps: true
 });
 
-TeacherSchema.pre('save', (next) => {
+TeacherSchema.pre('save', function (next) {
     if(this.isModified('password') || this.isNew){
         bcrypt.genSalt(10, (error, salt) => {
             if(error){
@@ -66,4 +102,3 @@ TeacherSchema.methods.verifyPassword = async function (pass, cb) {
 }
 
 let Teacher = module.exports = mongoose.model('Teacher', TeacherSchema);
-

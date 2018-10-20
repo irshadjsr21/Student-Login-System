@@ -10,6 +10,7 @@ const addUserMiddleware = require('./middlewares/addUser');
 
 // Importing Routers
 const studentAuthRouter = require('./routes/studentAuth');
+const teacherAuthRouter = require('./routes/teacherAuth');
 
 // Initializing App
 const app = express();
@@ -34,6 +35,8 @@ app.use(addUserMiddleware);
 
 // Routes
 app.use('/api/auth/student', studentAuthRouter);
+app.use('/api/auth/teacher', teacherAuthRouter);
+
 
 // Stating Server
 app.listen(config.PORT, () => {

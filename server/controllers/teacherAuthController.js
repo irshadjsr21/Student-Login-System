@@ -1,15 +1,15 @@
-const Student = require('../models/student');
+const Teacher = require('../models/teacher');
 
 const helperFunctions = require('../helperFunctions');
 
-async function checkStudentLoginCredentials(email, password, cb) {
-    Student.findOne({email: email}, (error, student) => {
+async function checkTeacherLoginCredentials(email, password, cb) {
+    Teacher.findOne({email: email}, (error, teacher) => {
         if(error){
             return cb(error);
         }
         else {
-            if(student){
-                student.verifyPassword(password, (error, isMatch) => {
+            if(teacher){
+                teacher.verifyPassword(password, (error, isMatch) => {
                     if(error){
                         return cb(error);
                     }
@@ -28,36 +28,35 @@ async function checkStudentLoginCredentials(email, password, cb) {
 
 module.exports = {
     
-    // Handles Student Registration
+    // Handles Teacher Registration
     register: (req, res) => {
-        let student = new Student({
+        let teacher = new Teacher({
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            year: req.body.year,
-            section: req.body.section,
+            classes: req.body.classes,
             email: req.body.email,
             password: req.body.password
         });
-        Student.find({email: student.email}, (error, students) => {
+        Teacher.find({email: teacher.email}, (error, teachers) => {
             if(error){
                 console.log(error);
                 return res.status(500).json({
                     msg: [
-                        "Some Internal Error Occured"
+                        "Some Error Occured"
                     ]
                 });
             }
-            if(students.length<=0) {
-                Student.create(student)
+            if(teachers.length<=0) {
+                Teacher.create(teacher)
                 .then(
-                    student => {
+                    teacher => {
                         return res.status(201).json({
-                            msg: ["Student Registered Successfully"]
+                            msg: ["Teacher Registered Successfully"]
                         })
                     }
                     )
                     .catch(
-                        error => {
+                        error => { 
                             const errorMsg = helperFunctions.extractMongooseErrorMsg(error);
                             return res.status(400).json({
                                 msg: errorMsg
@@ -73,9 +72,9 @@ module.exports = {
                 })
             },
             
-            // Handles Student Login
+            // Handles Teacher Login
             login: (req, res) => {
-                checkStudentLoginCredentials(req.body.email, req.body.password, (error, isMatch) => {
+                checkTeacherLoginCredentials(req.body.email, req.body.password, (error, isMatch) => {
                     if(error || !isMatch){
                         return res.status(401).json({
                             msg: [
@@ -84,14 +83,19 @@ module.exports = {
                         });
                     }
                     else {
-                        Student.findOne({email: req.body.email}, (error, student) => {
-                            helperFunctions.signJwt(student._id, 'student', (error, token) => {
+                        Teacher.findOne({email: req.body.email}, (error, teacher) => {
+                            if(error){
+                                console.log(error);
+                                return res.status(500).json({
+                                    msg: "Some Internal Error Occured"
+                                });
+                            }
+
+                            helperFunctions.signJwt(teacher._id, 'teacher', (error, token) => {
                                 if(error){
                                     console.log(error);
                                     return res.status(500).json({
-                                        msg: [
-                                            "Some Internal Error Occured"
-                                        ]
+                                        msg: "Some Internal Error Occured"
                                     });
                                 }
                                 else {
@@ -109,9 +113,9 @@ module.exports = {
             },
 
 
-            // To Get Details Of Logged In Student
-            getStudent: (req,res) => {
-                Student.findById(req.user.id, (error, student) => {
+            // To Get Details Of Logged In Teacher
+            getTeacher: (req,res) => {
+                Teacher.findById(req.user.id, (error, teacher) => {
                     if(error){
                         console.log(error);
                         return res.status(500).json({
@@ -121,15 +125,14 @@ module.exports = {
                         });
                     }
                     else{
-                        const stud = {
-                            firstname: student.firstname,
-                            lastname: student.lastname,
-                            email: student.email,
-                            year: student.year,
-                            section: student.section
+                        const teac = {
+                            firstname: teacher.firstname,
+                            lastname: teacher.lastname,
+                            email: teacher.email,
+                            classes: teacher.classes
                         }
                         return res.status(200).json({
-                            student: stud
+                            teacher: teac
                         });
                     }
                 });

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-var enu = {
+const enu = {
     values: ['A', 'B', 'C', 'D', 'E']
   , message: 'Invalid Section'
-  }
+}
 
 const StudentSchema = mongoose.Schema({
     firstname: {
