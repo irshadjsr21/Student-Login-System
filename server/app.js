@@ -6,11 +6,14 @@ const cors = require('cors');
 
 const config = require('./config');
 
+// Importing Custom Middlewares
 const addUserMiddleware = require('./middlewares/addUser'); 
+const checkAuthenticationMiddleware = require('./middlewares/checkAuthentication');
 
 // Importing Routers
 const studentAuthRouter = require('./routes/studentAuth');
 const teacherAuthRouter = require('./routes/teacherAuth');
+const teacherRequestsRouter = require('./routes/teacherRequests');
 
 // Initializing App
 const app = express();
@@ -36,7 +39,7 @@ app.use(addUserMiddleware);
 // Routes
 app.use('/api/auth/student', studentAuthRouter);
 app.use('/api/auth/teacher', teacherAuthRouter);
-
+app.use('/api/teacher', checkAuthenticationMiddleware('teacher') ,teacherRequestsRouter)
 
 // Stating Server
 app.listen(config.PORT, () => {
