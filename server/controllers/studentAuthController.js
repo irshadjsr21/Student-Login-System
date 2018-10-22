@@ -2,6 +2,7 @@ const Student = require('../models/student');
 
 const helperFunctions = require('../helperFunctions');
 
+// Function To check Student Login Credentials
 async function checkStudentLoginCredentials(email, password, cb) {
     Student.findOne({email: email}, (error, student) => {
         if(error){
@@ -33,8 +34,7 @@ module.exports = {
         let student = new Student({
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            year: req.body.year,
-            section: req.body.section,
+            class: req.body.class,
             email: req.body.email,
             password: req.body.password
         });
@@ -125,8 +125,7 @@ module.exports = {
                             firstname: student.firstname,
                             lastname: student.lastname,
                             email: student.email,
-                            year: student.year,
-                            section: student.section
+                            class: student.class,
                         }
                         return res.status(200).json({
                             student: stud

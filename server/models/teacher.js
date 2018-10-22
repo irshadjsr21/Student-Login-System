@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Enum for section in class
 const enu = {
     values: ['A', 'B', 'C', 'D', 'E']
   , message: 'Invalid Section in Class'
 }
 
+// Function to check if classes is Empty
 function classesEmptyValidator(classes) {
     if(classes[0] == "" || classes.length <= 0){
         return false;
@@ -13,7 +15,7 @@ function classesEmptyValidator(classes) {
     return true;
 }
 
-
+// Class Schema for classes
 const classSchema = mongoose.Schema({
     year: {
         type: Number,
@@ -64,6 +66,7 @@ const TeacherSchema = mongoose.Schema({
     timestamps: true
 });
 
+// Hash The Password Before Saving To Database
 TeacherSchema.pre('save', function (next) {
     if(this.isModified('password') || this.isNew){
         bcrypt.genSalt(10, (error, salt) => {
@@ -90,6 +93,7 @@ TeacherSchema.pre('save', function (next) {
     }
 })
 
+// Compare hashed password with given pass
 TeacherSchema.methods.verifyPassword = async function (pass, cb) {
     bcrypt.compare(pass, this.password, (error, result) => {
         if (error){

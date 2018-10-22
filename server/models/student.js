@@ -1,10 +1,29 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Enum for section in class
 const enu = {
     values: ['A', 'B', 'C', 'D', 'E']
-  , message: 'Invalid Section'
+  , message: 'Invalid Section in Class'
 }
+
+// Class Schema
+const classSchema = mongoose.Schema({
+    year: {
+        type: Number,
+        required: [true, "Year Is Required in Class"],
+        min: [1, 'Invalid Year in Class'],
+        max: [4 , 'Invalid Year in Class']
+    },
+    section: {
+        type: String,
+        enum: enu,
+        required: [true, "Section is Required in Class"]
+    }
+}, {
+    _id: false
+});
+
 
 const StudentSchema = mongoose.Schema({
     firstname: {
@@ -14,16 +33,9 @@ const StudentSchema = mongoose.Schema({
     lastname: {
         type: String,
     },
-    year: {
-        type: Number,
-        required: [true, "Year Is Required"],
-        min: [1, 'Invalid Year'],
-        max: [4 , 'Invalid Year']
-    },
-    section: {
-        type: String,
-        enum: enu,
-        required: [true, "Section is Required"]
+    class: {
+        type: classSchema,
+        required: [true, "Class is Required"]
     },
     email: {
         type: String,
@@ -40,6 +52,7 @@ const StudentSchema = mongoose.Schema({
     timestamps: true
 });
 
+// Hash The Password Before Saving To Database
 StudentSchema.pre('save', function (next) {
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, (error, salt) => {
@@ -66,6 +79,7 @@ StudentSchema.pre('save', function (next) {
     }
 })
 
+// Compare hashed password with given pass
 StudentSchema.methods.verifyPassword = async function (pass, cb) {
     bcrypt.compare(pass, this.password, (error, result) => {
         if (error){

@@ -2,6 +2,7 @@ const Teacher = require('../models/teacher');
 
 const helperFunctions = require('../helperFunctions');
 
+// Function To check Teacher Login Credentials
 async function checkTeacherLoginCredentials(email, password, cb) {
     Teacher.findOne({email: email}, (error, teacher) => {
         if(error){
