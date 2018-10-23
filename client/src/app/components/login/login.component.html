@@ -1,3 +1,94 @@
-<p>
-  login works!
-</p>
+<div class="row mb-2" style="font-size: 1.1em;">
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="role" id="student" value="student" (change)="roleChanged($event)" checked>
+    <label class="form-check-label" for="student">
+      Student
+    </label>
+  </div>
+  <div class="form-check ml-auto">
+    <input class="form-check-input" type="radio" name="role" id="teacher" value="teacher" (change)="roleChanged($event)">
+    <label class="form-check-label" for="teacher">
+      Teacher
+    </label>
+  </div>
+</div>
+
+<div class="card">
+  <h1 class="card-header text-center">{{ role | titlecase }} Login</h1>
+  <div class="card-body">
+    
+    <form [formGroup]="studentForm" class="form-group mt-4" (ngSubmit)="onStudentSubmit()" *ngIf="role == 'student'">
+      
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="email"> Email : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="sf.email.errors && (sf.email.dirty || sf.email.touched)">
+        </div>
+        <div *ngIf="sf.email.errors  && (sf.email.dirty || sf.email.touched)" class="col-4 text-danger">
+          <div *ngIf="sf.email.errors.required">
+            Email is required
+          </div>
+          <div *ngIf="sf.email.errors.email">
+            Enter a Valid Email
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-2">
+          <label for="password"> Password : </label>
+        </div>
+        <div class="col-6">
+          <input type="password" formControlName="password" class="form-control" name="password" [class.invalid-form]="sf.password.errors && (sf.password.dirty || sf.password.touched)">
+        </div>
+        <div *ngIf="sf.password.errors" class="col-4 text-danger">
+          <div *ngIf="sf.password.errors.required && (sf.password.dirty || sf.password.touched)">
+            Password is required
+          </div>
+        </div>
+      </div>
+      
+      <input type="submit" value="Submit" [disabled]="!studentForm.valid" class="btn btn-primary mt-4">
+    </form>
+    
+    
+    <form [formGroup]="teacherForm" class="form-group mt-4" (ngSubmit)="onTeacherSubmit()" *ngIf="role == 'teacher'">
+      
+    <div class="row mb-2">
+      <div class="col-2">
+        <label for="email"> Email : </label>
+      </div>
+      <div class="col-6">
+        <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="tf.email.errors && (tf.email.dirty || tf.email.touched)">
+      </div>
+      <div *ngIf="tf.email.errors  && (tf.email.dirty || tf.email.touched)" class="col-4 text-danger">
+        <div *ngIf="tf.email.errors.required">
+          Email is required
+        </div>
+        <div *ngIf="tf.email.errors.email">
+          Enter a Valid Email
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-2">
+        <label for="password"> Password : </label>
+      </div>
+      <div class="col-6">
+        <input type="password" formControlName="password" class="form-control" name="password" [class.invalid-form]="tf.password.errors && (tf.password.dirty || tf.password.touched)">
+      </div>
+      <div *ngIf="tf.password.errors" class="col-4 text-danger">
+        <div *ngIf="tf.password.errors.required && (tf.password.dirty || tf.password.touched)">
+          Password is required
+        </div>
+      </div>
+    </div>
+    
+    <input type="submit" value="Submit" [disabled]="!teacherForm.valid" class="btn btn-primary mt-4">
+  </form>
+  
+</div>
+</div>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,11 @@ import { NavComponent } from './components/nav/nav.component';
 import { AuthService } from './services/auth.service';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessagesService } from './services/messages.service';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { StudentAuthGuard } from './auth/student-auth.guard';
+import { TeacherAuthGuard } from './auth/teacher-auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,8 @@ import { MessagesService } from './services/messages.service';
     RegisterComponent,
     LoginComponent,
     NavComponent,
-    MessagesComponent
+    MessagesComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +35,11 @@ import { MessagesService } from './services/messages.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, MessagesService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }, AuthService, MessagesService, StudentAuthGuard, TeacherAuthGuard, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,112 @@
+<div *ngIf="(user === 'student') && student" class="card">
+  <h1 class="card-header text-center">Student Profile</h1>
+  
+  <div class="card-body">
+    
+    <ul class="list-group">
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Firstname : </strong></div>
+          <div class="col">{{student.firstname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Lastname : </strong></div>
+          <div class="col">{{student.lastname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Email : </strong></div>
+          <div class="col">{{student.email}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Year : </strong></div>
+          <div class="col">{{student.class.year}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Section : </strong></div>
+          <div class="col">{{student.class.section}}</div>
+        </div>
+      </li>
+      
+    </ul>
+    
+  </div>
+</div>
+
+
+<div *ngIf="(user === 'teacher') && teacher" class="card">
+  <h1 class="card-header text-center">Teacher Profile</h1>
+  
+  <div class="card-body">
+    
+    <ul class="list-group">
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Firstname : </strong></div>
+          <div class="col">{{teacher.firstname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Lastname : </strong></div>
+          <div class="col">{{teacher.lastname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Email : </strong></div>
+          <div class="col">{{teacher.email}}</div>
+        </div>
+      </li>
+      
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4"><strong>Classes : </strong></div>
+
+          <div class="col-md-8">
+
+            <ul class="list-group-item">
+
+              <div *ngFor="let class of teacher.classes">
+                <strong>Class : </strong>
+                <li class="list-group-item mt-2">
+                  <div class="row">
+                    <div class="col"><strong>Year : </strong></div>
+                    <div class="col">{{class.year}}</div>
+                  </div>
+                </li>
+                
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col"><strong>Section : </strong></div>
+                    <div class="col">{{class.section}}</div>
+                  </div>
+                </li>
+                <br>
+              </div>
+            </ul>
+
+          </div>
+        </div>
+      </li>
+      
+    </ul>
+    
+  </div>
+</div>

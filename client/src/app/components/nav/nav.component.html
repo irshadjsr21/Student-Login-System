@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="#">Student Login</a>
+  <a class="navbar-brand" href="#">Students Login</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -11,7 +11,7 @@
           </li>
       </ul>
 
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto" *ngIf="!(authService.whoLoggedIn())">
       <li class="nav-item"> 
         <a class="nav-link" routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Register</a>
       </li>
@@ -19,5 +19,23 @@
         <a class="nav-link" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Login</a>
       </li>
     </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="authService.whoLoggedIn() == 'student'">
+      <li class="nav-item"> 
+        <a class="nav-link" routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Student Profile</a>
+      </li>
+      <li class="nav-item"> 
+        <a class="nav-link" (click)="logoutUser()" style="cursor: pointer;">Logout</a>
+      </li>
+    </ul>
   </div>
+
+  <ul class="navbar-nav ml-auto" *ngIf="authService.whoLoggedIn() == 'teacher'">
+    <li class="nav-item"> 
+      <a class="nav-link" routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Teacher Profile</a>
+    </li>
+    <li class="nav-item" > 
+      <a class="nav-link" (click)="logoutUser()" style="cursor: pointer;">Logout</a>
+    </li>
+  </ul>
 </nav>

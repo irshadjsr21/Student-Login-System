@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Student } from 'src/app/models/student.model';
 import { Teacher } from 'src/app/models/teacher.model';
 import { Message } from 'src/app/models/message.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit {
   sectionArray = ['A', 'B', 'C', 'D', 'E'];
   role = 'student';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private ms: MessagesService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private ms: MessagesService, private router: Router) { }
 
   ngOnInit() {
     this.buildForm();
@@ -57,6 +58,7 @@ export class RegisterComponent implements OnInit {
         result => {
           const msg = new Message(result['msg'], 'success', 4000);
           this.ms.addMessages(msg);
+          this.router.navigateByUrl('/login');
         },
         error => {
           const msg = new Message(error.error['msg'], 'danger', 4000);
@@ -77,6 +79,7 @@ export class RegisterComponent implements OnInit {
        result => {
         const msg = new Message(result['msg'], 'success', 4000);
         this.ms.addMessages(msg);
+        this.router.navigateByUrl('/login');
        },
        error => {
         const msg = new Message(error.error['msg'], 'danger', 4000);

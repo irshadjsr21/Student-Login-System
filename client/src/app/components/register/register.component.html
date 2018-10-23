@@ -14,7 +14,7 @@
 </div>
 
 <div class="card">
-  <h1 class="card-header text-center">Register</h1>
+  <h1 class="card-header text-center">Register {{ role | titlecase }}</h1>
   <div class="card-body">
     
     <form [formGroup]="studentForm" class="form-group mt-4" (ngSubmit)="onStudentSubmit()" *ngIf="role == 'student'">
@@ -38,23 +38,6 @@
         </div>
         <div class="col-6">
           <input type="text" formControlName="lastname" class="form-control" name="lastname">
-        </div>
-      </div>
-      
-      <div class="row mb-2">
-        <div class="col-2">
-          <label for="email"> Email : </label>
-        </div>
-        <div class="col-6">
-          <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="sf.email.errors && (sf.email.dirty || sf.email.touched)">
-        </div>
-        <div *ngIf="sf.email.errors  && (sf.email.dirty || sf.email.touched)" class="col-4 text-danger">
-          <div *ngIf="sf.email.errors.required">
-            Email is required
-          </div>
-          <div *ngIf="sf.email.errors.email">
-            Enter a Valid Email
-          </div>
         </div>
       </div>
       
@@ -86,6 +69,23 @@
         <div *ngIf="sf.section.errors" class="col-4 text-danger">
           <div *ngIf="sf.section.errors.required && (sf.section.dirty || sf.section.touched)">
             Section is required
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="email"> Email : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="sf.email.errors && (sf.email.dirty || sf.email.touched)">
+        </div>
+        <div *ngIf="sf.email.errors  && (sf.email.dirty || sf.email.touched)" class="col-4 text-danger">
+          <div *ngIf="sf.email.errors.required">
+            Email is required
+          </div>
+          <div *ngIf="sf.email.errors.email">
+            Enter a Valid Email
           </div>
         </div>
       </div>
