@@ -26,6 +26,24 @@ async function checkTeacherLoginCredentials(email, password, cb) {
     })
 }
 
+// Function to check for duplicate Classes
+function duplicateClasses(classes) {
+    let a = [];
+    classes.forEach((clas) => {
+        a.push(JSON.stringify(clas));
+    });
+
+    var counts = [];
+    for(var i = 0; i <= a.length; i++) {
+        if(counts[a[i]] === undefined) {
+            counts[a[i]] = 1;
+        } else {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 module.exports = {
     
@@ -48,6 +66,15 @@ module.exports = {
                 });
             }
             if(teachers.length<=0) {
+
+                if(duplicateClasses(teacher.classes)){
+                    return res.status(400).json({
+                        msg: [
+                            "Duplicate Classes"
+                        ]
+                    });
+                }
+
                 Teacher.create(teacher)
                 .then(
                     teacher => {
@@ -91,7 +118,7 @@ module.exports = {
                                     msg: "Some Internal Error Occured"
                                 });
                             }
-
+                            
                             helperFunctions.signJwt(teacher._id, 'teacher', (error, token) => {
                                 if(error){
                                     console.log(error);
@@ -112,8 +139,8 @@ module.exports = {
                     }
                 });
             },
-
-
+            
+            
             // To Get Details Of Logged In Teacher
             getTeacher: (req,res) => {
                 Teacher.findById(req.user.id, (error, teacher) => {
