@@ -1,0 +1,7 @@
+<div *ngIf="messages">
+  <div *ngFor="let message of messages">
+    <div class="alert alert-{{message.type}}">
+      {{message.msg}}
+    </div>
+  </div>
+</div>

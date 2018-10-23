@@ -1,0 +1,226 @@
+<div class="row mb-2" style="font-size: 1.1em;">
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="role" id="student" value="student" (change)="roleChanged($event)" checked>
+    <label class="form-check-label" for="student">
+      Student
+    </label>
+  </div>
+  <div class="form-check ml-auto">
+    <input class="form-check-input" type="radio" name="role" id="teacher" value="teacher" (change)="roleChanged($event)">
+    <label class="form-check-label" for="teacher">
+      Teacher
+    </label>
+  </div>
+</div>
+
+<div class="card">
+  <h1 class="card-header text-center">Register</h1>
+  <div class="card-body">
+    
+    <form [formGroup]="studentForm" class="form-group mt-4" (ngSubmit)="onStudentSubmit()" *ngIf="role == 'student'">
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="firstname"> First Name : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="firstname" class="form-control" name="firstname" [class.invalid-form]="sf.firstname.errors && (sf.firstname.dirty || sf.firstname.touched)">
+        </div>
+        <div *ngIf="sf.firstname.errors && (sf.firstname.dirty || sf.firstname.touched)" class="col-4 text-danger">
+          <div *ngIf="sf.firstname.errors.required ">
+            First Name is required
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="lastname"> Last Name : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="lastname" class="form-control" name="lastname">
+        </div>
+      </div>
+      
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="email"> Email : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="sf.email.errors && (sf.email.dirty || sf.email.touched)">
+        </div>
+        <div *ngIf="sf.email.errors  && (sf.email.dirty || sf.email.touched)" class="col-4 text-danger">
+          <div *ngIf="sf.email.errors.required">
+            Email is required
+          </div>
+          <div *ngIf="sf.email.errors.email">
+            Enter a Valid Email
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-2">
+          <label for="year"> Year : </label>
+        </div>
+        <div class="col-6">
+          <select name="year" formControlName="year" class="form-control mb-2">
+            <option  *ngFor="let year of yearsArray" value="{{year}}">{{year}}</option>
+          </select>
+        </div>
+        <div *ngIf="sf.year.errors" class="col-4 text-danger">
+          <div *ngIf="sf.year.errors.required && (sf.year.dirty || sf.year.touched)">
+            Year is required
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-2">
+          <label for="year"> Section : </label>
+        </div>
+        <div class="col-6">
+          <select name="section" formControlName="section" class="form-control mb-2">
+            <option  *ngFor="let section of sectionArray" value="{{section}}">{{section}}</option>
+          </select>
+        </div>
+        <div *ngIf="sf.section.errors" class="col-4 text-danger">
+          <div *ngIf="sf.section.errors.required && (sf.section.dirty || sf.section.touched)">
+            Section is required
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-2">
+          <label for="password"> Password : </label>
+        </div>
+        <div class="col-6">
+          <input type="password" formControlName="password" class="form-control" name="password" [class.invalid-form]="sf.password.errors && (sf.password.dirty || sf.password.touched)">
+        </div>
+        <div *ngIf="sf.password.errors" class="col-4 text-danger">
+          <div *ngIf="sf.password.errors.required && (sf.password.dirty || sf.password.touched)">
+            Password is required
+          </div>
+        </div>
+      </div>
+      
+      <input type="submit" value="Submit" [disabled]="!studentForm.valid" class="btn btn-primary mt-4">
+    </form>
+    
+    
+    <form [formGroup]="teacherForm" class="form-group mt-4" (ngSubmit)="onTeacherSubmit()" *ngIf="role == 'teacher'">
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="firstname"> First Name : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="firstname" class="form-control" name="firstname" [class.invalid-form]="tf.firstname.errors && (tf.firstname.dirty || tf.firstname.touched)">
+        </div>
+        <div *ngIf="tf.firstname.errors && (tf.firstname.dirty || tf.firstname.touched)" class="col-4 text-danger">
+          <div *ngIf="tf.firstname.errors.required ">
+            First Name is required
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-2">
+        <div class="col-2">
+          <label for="lastname"> Last Name : </label>
+        </div>
+        <div class="col-6">
+          <input type="text" formControlName="lastname" class="form-control" name="lastname">
+        </div>
+      </div>
+      
+      <br>
+      <strong>Classes : </strong>
+      <br>
+      <br>
+      <div formArrayName="classes"
+      *ngFor="let class of classesForm.controls; let i = index;">
+      <div [formGroupName]="i">
+        
+        <div class="row">
+          
+          <div class="col-md-1">
+            <label for="year"> Year : </label>
+          </div>
+          
+          <div class="col-md-2">
+            <select name="year" formControlName="year" class="form-control mb-2">
+              <option  *ngFor="let year of yearsArray" value="{{year}}">{{year}}</option>
+            </select>
+          </div>
+          
+          <div  class="col-md-2 text-danger">
+            <div *ngIf="class.controls.year.errors  && (class.controls.year.dirty || class.controls.year.touched)">
+              <div *ngIf="class.controls.year.errors.required">
+                Year is required
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="col-md-1">
+            <label for="year"> Section : </label>
+          </div>
+          
+          <div class="col-md-2">
+            <select name="section" formControlName="section" class="form-control mb-2">
+              <option  *ngFor="let section of sectionArray" value="{{section}}">{{section}}</option>
+            </select>
+          </div>
+          
+          <div  class="col-md-2 text-danger">
+            <div *ngIf="class.controls.section.errors  && (class.controls.section.dirty || class.controls.section.touched)">
+              <div *ngIf="class.controls.section.errors.required">
+                Section is required
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-2" *ngIf="i != 0" (click)="removeClass(i)"><button class="btn btn-danger">Delete Class</button></div>
+          
+        </div>
+      </div>      
+    </div>
+    <div class="row"> <div class="col-md-10"></div>    <div class="col-md-2"><button class="btn btn-primary"  (click)="addClass()">Add Class</button></div></div>
+    
+    
+    
+    <div class="row mb-2">
+      <div class="col-2">
+        <label for="email"> Email : </label>
+      </div>
+      <div class="col-6">
+        <input type="text" formControlName="email" class="form-control" name="email" [class.invalid-form]="tf.email.errors && (tf.email.dirty || tf.email.touched)">
+      </div>
+      <div *ngIf="tf.email.errors  && (tf.email.dirty || tf.email.touched)" class="col-4 text-danger">
+        <div *ngIf="tf.email.errors.required">
+          Email is required
+        </div>
+        <div *ngIf="tf.email.errors.email">
+          Enter a Valid Email
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-2">
+        <label for="password"> Password : </label>
+      </div>
+      <div class="col-6">
+        <input type="password" formControlName="password" class="form-control" name="password" [class.invalid-form]="tf.password.errors && (tf.password.dirty || tf.password.touched)">
+      </div>
+      <div *ngIf="tf.password.errors" class="col-4 text-danger">
+        <div *ngIf="tf.password.errors.required && (tf.password.dirty || tf.password.touched)">
+          Password is required
+        </div>
+      </div>
+    </div>
+    
+    <input type="submit" value="Submit" [disabled]="!teacherForm.valid" class="btn btn-primary mt-4">
+  </form>
+  
+</div>
+</div>
