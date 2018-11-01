@@ -1,0 +1,41 @@
+<div *ngIf="marksSheets">
+  <h2 class="text-center">Marks Sheets</h2>
+  
+  <div *ngFor="let marksSheet of marksSheets">
+    
+    <div class="card mb-4">
+      
+      <h5 class="card-header text-center">{{marksSheet.title}}</h5>
+      
+      <div class="card-body">
+        
+        <table *ngIf="marksSheet.marksArray" class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Marks Obtained</th>
+              <th scope="col">Maximum Marks</th>
+              <th scope="col">Passing Marks</th>
+              <th scope="col">Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let elemet of marksSheet.marksArray; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{elemet.subject}}</td>
+              <td>{{elemet.marks}}</td>
+              <td>{{elemet.maxMarks}}</td>
+              <td>{{elemet.passMarks}}</td>
+              <td  [ngClass]="elemet.marks >= elemet.passMarks ? 'text-success' : 'text-danger'"><strong>{{elemet.marks * 100 / elemet.maxMarks | number:'2.2-2'}}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</div>

@@ -102,7 +102,6 @@ export class RegisterComponent implements OnInit {
   addClass() {
     const clas = this.createClass();
     this.classesForm.push(clas);
-    console.log(this.classesForm);
   }
 
   // To remove class from teacher classes array

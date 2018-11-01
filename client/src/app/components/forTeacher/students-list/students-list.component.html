@@ -17,18 +17,16 @@
               <th scope="col">Firstname</th>
               <th scope="col">Lastname</th>
               <th scope="col">Email</th>
-              <th scope="col">Add Marks</th>
             </tr>
           </thead>
 
           <tbody>
 
-            <tr *ngFor="let student of students[i]; let j = index" style="cursor: pointer;">
+            <tr *ngFor="let student of students[i]; let j = index" style="cursor: pointer;" routerLink="/teacher/student" [queryParams]="{ id: student.id }">
               <th scope="row">{{j+1}}</th>
               <td>{{student.firstname}}</td>
               <td>{{student.lastname}}</td>
               <td>{{student.email}}</td>
-              <td><button routerLink="/teacher/student" [queryParams]="{ id: student.id }" class="btn btn-info">Add Marks</button></td>
             </tr>
 
           </tbody>

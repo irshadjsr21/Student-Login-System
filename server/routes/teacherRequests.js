@@ -5,4 +5,10 @@ const teacherRequestsController = require('../controllers/teacherRequestsControl
 
 router.get('/my_students', teacherRequestsController.getMyStudents);
 
+router.get('/student', teacherRequestsController.getStudent);
+
+router.get('/marks_sheet', teacherRequestsController.getStudentMarksSheet);
+
+router.post('/add_marks_sheet', teacherRequestsController.addMarksSheet);
+
 module.exports = router;

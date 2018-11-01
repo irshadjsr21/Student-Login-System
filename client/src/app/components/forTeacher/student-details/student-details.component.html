@@ -1,0 +1,50 @@
+<div *ngIf="student" class="card">
+  <h1 class="card-header text-center">Student Profile</h1>
+  
+  <div class="card-body">
+    
+    <ul class="list-group mb-4">
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Firstname : </strong></div>
+          <div class="col">{{student.firstname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Lastname : </strong></div>
+          <div class="col">{{student.lastname}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Email : </strong></div>
+          <div class="col">{{student.email}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Year : </strong></div>
+          <div class="col">{{student.class.year}}</div>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"><strong>Section : </strong></div>
+          <div class="col">{{student.class.section}}</div>
+        </div>
+      </li>
+      
+    </ul>
+    
+    <button class="btn btn-primary" routerLink="/teacher/add_marks_sheet" [queryParams]="{ id: student.id }">Add Marks Sheet</button>
+  </div>
+  
+</div>
+
+<div class="mt-4"><app-marks-sheet [marksSheets]="marksSheets"></app-marks-sheet></div>

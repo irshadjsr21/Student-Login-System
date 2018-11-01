@@ -18,4 +18,25 @@ export class TeacherService {
       }
     });
   }
+
+  getStudent(id) {
+    return this.http.get(this.baseUrl + 'student', {
+      params: {
+        id: id
+      }
+    });
+  }
+
+  addMarksSheet(marksSheet) {
+    return this.http.post(this.baseUrl + 'add_marks_sheet', marksSheet);
+  }
+
+  getMarksSheets(id) {
+    return this.http.get(this.baseUrl + 'marks_sheet', {
+      params: {
+        id: id
+      }
+    });
+  }
+
 }

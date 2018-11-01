@@ -25,10 +25,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
                     },
                     error => {
-                        this.router.navigateByUrl('/login');
-                        const message = new Message([error.error.msg], 'danger', 4000);
-                        this.ms.addMessages(message);
-                        this.authService.removeToken();
+                        if (error[status] === 401) {
+                            this.router.navigateByUrl('/login');
+                            const message = new Message(error.error['msg'], 'danger', 4000);
+                            this.ms.addMessages(message);
+                            this.authService.removeToken();
+                        }
                     }
                 )
             );

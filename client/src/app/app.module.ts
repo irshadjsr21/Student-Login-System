@@ -18,7 +18,10 @@ import { StudentAuthGuard } from './auth/student-auth.guard';
 import { TeacherAuthGuard } from './auth/teacher-auth.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { StudentsListComponent } from './components/forTeacher/students-list/students-list.component';
-import { AddStudentMarksComponent } from './components/forTeacher/add-student-marks/add-student-marks.component';
+import { StudentDetailsComponent } from './components/forTeacher/student-details/student-details.component';
+import { AddStudentMarksSheetComponent } from './components/forTeacher/add-student-marks-sheet/add-student-marks-sheet.component';
+import { MarksSheetComponent } from './components/marks-sheet/marks-sheet.component';
+import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { AddStudentMarksComponent } from './components/forTeacher/add-student-ma
     MessagesComponent,
     UserProfileComponent,
     StudentsListComponent,
-    AddStudentMarksComponent
+    StudentDetailsComponent,
+    AddStudentMarksSheetComponent,
+    MarksSheetComponent,
+    MyMarksComponent
   ],
   imports: [
     BrowserModule,
