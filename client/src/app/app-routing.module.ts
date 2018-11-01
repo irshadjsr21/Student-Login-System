@@ -6,6 +6,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthGuard } from './auth/auth.guard';
+import { StudentsListComponent } from './components/forTeacher/students-list/students-list.component';
+import { TeacherAuthGuard } from './auth/teacher-auth.guard';
+import { AddStudentMarksComponent } from './components/forTeacher/add-student-marks/add-student-marks.component';
 
 const routes: Routes = [
   {
@@ -29,6 +32,16 @@ const routes: Routes = [
     path: 'profile',
     component: UserProfileComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'teacher/students_list',
+    component: StudentsListComponent,
+    canActivate: [AuthGuard, TeacherAuthGuard]
+  },
+  {
+    path: 'teacher/student',
+    component: AddStudentMarksComponent,
+    canActivate: [AuthGuard, TeacherAuthGuard]
   }
 ];
 

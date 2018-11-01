@@ -5,7 +5,10 @@ module.exports = {
 
     // To Get Student Of Specific Class
     getMyStudents: (req, res) => {
-        const clas = req.body.class;
+        const clas = {
+            year: parseInt(req.query.year),
+            section: req.query.section
+        };
         Teacher.findById(req.user.id, (error, teacher) => {
             if(error){
                 console.log(error);

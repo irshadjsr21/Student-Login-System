@@ -17,7 +17,7 @@ export class TeacherAuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
     if (!this.authService.isTeacherLoggedIn()) {
       this.router.navigateByUrl('/login');
-      const msg = new Message(['Login Required'], 'danger', 4000);
+      const msg = new Message(['Unauthorized User'], 'danger', 4000);
       this.ms.addMessages(msg);
       this.authService.removeToken();
       return false;

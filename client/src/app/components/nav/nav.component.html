@@ -5,7 +5,23 @@
   </button>
   
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    
+      <ul class="navbar-nav mr-auto"  *ngIf="!(authService.whoLoggedIn())">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+          </li>
+      </ul>
+
+      <ul class="navbar-nav mr-auto" *ngIf="authService.whoLoggedIn() == 'teacher'">
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/teacher/students_list" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Students</a>
+          </li>
+      </ul>
+
+      <ul class="navbar-nav mr-auto"  *ngIf="authService.whoLoggedIn() == 'student'">
           <li class="nav-item">
             <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
           </li>
@@ -31,7 +47,7 @@
   </div>
 
   <ul class="navbar-nav ml-auto" *ngIf="authService.whoLoggedIn() == 'teacher'">
-    <li class="nav-item"> 
+    <li class="nav-item">
       <a class="nav-link" routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Teacher Profile</a>
     </li>
     <li class="nav-item" > 

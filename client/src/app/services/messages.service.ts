@@ -13,7 +13,7 @@ export class MessagesService {
 
   addMessages(message: Message) {
     this.messages.unshift(message);
-    setTimeout(() => { this.messages.shift(); }, message.time);
+    setTimeout(() => { this.messages.pop(); }, message.time);
   }
 
   getMessages(): Observable<Message[]> {

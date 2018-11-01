@@ -17,6 +17,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { StudentAuthGuard } from './auth/student-auth.guard';
 import { TeacherAuthGuard } from './auth/teacher-auth.guard';
 import { AuthGuard } from './auth/auth.guard';
+import { StudentsListComponent } from './components/forTeacher/students-list/students-list.component';
+import { AddStudentMarksComponent } from './components/forTeacher/add-student-marks/add-student-marks.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AuthGuard } from './auth/auth.guard';
     LoginComponent,
     NavComponent,
     MessagesComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    StudentsListComponent,
+    AddStudentMarksComponent
   ],
   imports: [
     BrowserModule,

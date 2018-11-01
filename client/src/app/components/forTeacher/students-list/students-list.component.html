@@ -1,0 +1,46 @@
+<h1 class="text-center mb-4">Student Details</h1>
+
+<div>
+  <div class="card mb-4" *ngFor="let class of classes; let i = index">
+    
+    <h5 class="card-header text-center">Class : {{class.year}} {{class.section}}</h5>
+    
+    <div class="card-body">
+      
+      <div *ngIf="students[i] && students[i].length>=1">
+
+        <table class="table table-hover">
+
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Lastname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Add Marks</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let student of students[i]; let j = index" style="cursor: pointer;">
+              <th scope="row">{{j+1}}</th>
+              <td>{{student.firstname}}</td>
+              <td>{{student.lastname}}</td>
+              <td>{{student.email}}</td>
+              <td><button routerLink="/teacher/student" [queryParams]="{ id: student.id }" class="btn btn-info">Add Marks</button></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+      
+      <div *ngIf="!(students[i] && students[i].length>=1)">
+        No Student Found
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
