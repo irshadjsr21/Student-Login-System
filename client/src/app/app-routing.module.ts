@@ -10,6 +10,8 @@ import { StudentsListComponent } from './components/forTeacher/students-list/stu
 import { TeacherAuthGuard } from './auth/teacher-auth.guard';
 import { StudentDetailsComponent } from './components/forTeacher/student-details/student-details.component';
 import { AddStudentMarksSheetComponent } from './components/forTeacher/add-student-marks-sheet/add-student-marks-sheet.component';
+import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.component';
+import { StudentAuthGuard } from './auth/student-auth.guard';
 
 const routes: Routes = [
   {
@@ -48,6 +50,11 @@ const routes: Routes = [
     path: 'teacher/add_marks_sheet',
     component: AddStudentMarksSheetComponent,
     canActivate: [AuthGuard, TeacherAuthGuard]
+  },
+  {
+    path: 'student/my_marks',
+    component: MyMarksComponent,
+    canActivate: [AuthGuard, StudentAuthGuard]
   }
 ];
 

@@ -14,6 +14,7 @@ const checkAuthenticationMiddleware = require('./middlewares/checkAuthentication
 const studentAuthRouter = require('./routes/studentAuth');
 const teacherAuthRouter = require('./routes/teacherAuth');
 const teacherRequestsRouter = require('./routes/teacherRequests');
+const studentRequestsRouter = require('./routes/studentRequests');
 
 // Initializing App
 const app = express();
@@ -40,6 +41,8 @@ app.use(addUserMiddleware);
 app.use('/api/auth/student', studentAuthRouter);
 app.use('/api/auth/teacher', teacherAuthRouter);
 app.use('/api/teacher', checkAuthenticationMiddleware('teacher') ,teacherRequestsRouter)
+
+app.use('/api/student', checkAuthenticationMiddleware('student') ,studentRequestsRouter)
 
 // Stating Server
 app.listen(config.PORT, () => {
