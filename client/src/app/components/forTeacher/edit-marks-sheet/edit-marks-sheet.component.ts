@@ -1,32 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TeacherService } from 'src/app/services/teacher.service';
 import { MessagesService } from 'src/app/services/messages.service';
-import { Message } from 'src/app/models/message.model';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Message } from 'src/app/models/message.model';
 
 @Component({
-  selector: 'app-add-student-marks-sheet',
-  templateUrl: './add-student-marks-sheet.component.html',
-  styleUrls: ['./add-student-marks-sheet.component.scss']
+  selector: 'app-edit-marks-sheet',
+  templateUrl: './edit-marks-sheet.component.html',
+  styleUrls: ['./edit-marks-sheet.component.scss']
 })
-export class AddStudentMarksSheetComponent implements OnInit {
+export class EditMarksSheetComponent implements OnInit {
 
   private id;
+  private marksSheet;
   private marksSheetForm: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute, private teacherService: TeacherService,
-     private ms: MessagesService, private fb: FormBuilder) { }
+    private ms: MessagesService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams
       .subscribe(params => {
         this.id = params.id;
+        this.getMarksSheet();
     });
 
+  }
+
+  createForm() {
     this.marksSheetForm = this.fb.group({
-      title: ['', Validators.required],
-      marksArray: this.fb.array([ this.createMarks() ])
+      title: [this.marksSheet.title, Validators.required],
+      marksArray: this.fb.array(this.fillArray())
+    });
+  }
+
+  fillArray() {
+    const array = [];
+    for (const mark of this.marksSheet.marksArray) {
+      const element = this.createMarksFromData(mark.subject, mark.marks, mark.maxMarks, mark.passMarks);
+      array.push(element);
+    }
+    return array;
+  }
+
+  createMarksFromData(s, m, mm, pm) {
+    return this.fb.group({
+      subject: [s, Validators.required],
+      marks: [m, Validators.required],
+      maxMarks: [mm],
+      passMarks: [pm]
     });
   }
 
@@ -39,15 +62,27 @@ export class AddStudentMarksSheetComponent implements OnInit {
     });
   }
 
+  getMarksSheet() {
+    this.teacherService.getMarksSheet(this.id).subscribe(
+      result => {
+        this.marksSheet = result['marksSheet'];
+        this.createForm();
+      },
+      error => {
+        const msg = new Message(error.error['msg'], 'danger', 4000);
+        this.ms.addMessages(msg);
+      }
+    );
+  }
+
   onSubmit() {
     if (this.marksSheetForm.valid) {
-      const marksSheet = {
-        studentId: this.id,
+      const data = {
         title: this.marksSheetForm.value.title,
         marksArray: this.marksSheetForm.value.marksArray
       };
 
-      this.teacherService.addMarksSheet(marksSheet).subscribe(
+      this.teacherService.updateMarksSheet(this.id, data).subscribe(
         result => {
           const msg = new Message(result['msg'], 'success', 4000);
           this.ms.addMessages(msg);
@@ -57,9 +92,11 @@ export class AddStudentMarksSheetComponent implements OnInit {
           this.ms.addMessages(msg);
         }
       );
-      this.marksSheetForm.reset();
+
+      this.router.navigate(['/teacher/student'], {queryParams: { id: this.marksSheet.studentId}});
     }
   }
+
 
   // To Add FormGroup To Marks Array
   addMark() {
@@ -79,4 +116,5 @@ export class AddStudentMarksSheetComponent implements OnInit {
   get marksForm() {
     return this.marksSheetForm.get('marksArray') as FormArray;
   }
+
 }

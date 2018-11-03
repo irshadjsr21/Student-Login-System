@@ -7,8 +7,14 @@ router.get('/my_students', teacherRequestsController.getMyStudents);
 
 router.get('/student', teacherRequestsController.getStudent);
 
-router.get('/marks_sheet', teacherRequestsController.getStudentMarksSheet);
+router.get('/student_marks_sheets', teacherRequestsController.getStudentMarksSheet);
 
-router.post('/add_marks_sheet', teacherRequestsController.addMarksSheet);
+router.get('/marks_sheet', teacherRequestsController.getMarksSheet);
+
+router.post('/marks_sheet', teacherRequestsController.addMarksSheet);
+
+router.patch('/marks_sheet/:id', teacherRequestsController.updateMarksSheet);
+
+router.delete('/marks_sheet/:id', teacherRequestsController.deleteMarksSheet);
 
 module.exports = router;

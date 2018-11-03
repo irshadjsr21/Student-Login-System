@@ -1,7 +1,8 @@
-<div *ngIf="marksSheets">
+<div *ngIf="marksSheets && marksSheets.length > 0">
+  
   <h2 class="text-center">Marks Sheets</h2>
   
-  <div *ngFor="let marksSheet of marksSheets">
+  <div *ngFor="let marksSheet of marksSheets; let j = index;">
     
     <div class="card mb-4">
       
@@ -32,6 +33,19 @@
           </tbody>
         </table>
         
+        <div class="row" *ngIf="role === 'teacher'">
+          <div class="col">
+            <button class="btn btn-primary" routerLink="/teacher/edit_marks_sheet" [queryParams]="{ id: marksSheet.id }">Edit</button>
+          </div>
+          <div class="col text-right">
+            <button class="btn btn-danger" (click)="deleteMarksSheet(marksSheet.id, j)">Delete</button>
+          </div>
+        </div>
+
+        <div class="text-right mt-4" style="opacity: .5">
+          {{marksSheet.createdAt | date : 'short'}}
+        </div>
+
       </div>
       
     </div>

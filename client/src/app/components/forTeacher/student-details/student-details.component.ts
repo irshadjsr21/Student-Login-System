@@ -13,7 +13,8 @@ export class StudentDetailsComponent implements OnInit {
 
   private student;
   private id;
-  private marksSheets;
+  private marksSheets = [];
+  private getStudentMarksSheetsSubscription;
 
   constructor(private activatedRoute: ActivatedRoute, private teacherService: TeacherService, private ms: MessagesService) { }
 
@@ -39,7 +40,7 @@ export class StudentDetailsComponent implements OnInit {
   }
 
   getStudentMarksSheets() {
-    this.teacherService.getMarksSheets(this.id).subscribe(
+    this.getStudentMarksSheetsSubscription = this.teacherService.getStudentMarksSheets(this.id).subscribe(
       result => {
         this.marksSheets = result['marksSheets'];
       },
@@ -48,6 +49,10 @@ export class StudentDetailsComponent implements OnInit {
         this.ms.addMessages(msg);
       }
     );
+  }
+
+  onMarksSheetChange(i) {
+    this.marksSheets.splice(i, 1);
   }
 
 }

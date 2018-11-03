@@ -47,4 +47,4 @@
   
 </div>
 
-<div class="mt-4"><app-marks-sheet [marksSheets]="marksSheets"></app-marks-sheet></div>
+<div class="mt-4"><app-marks-sheet [marksSheets]="marksSheets" (marksSheetDeleted)="onMarksSheetChange($event)" ></app-marks-sheet></div>

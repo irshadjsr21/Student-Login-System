@@ -26,6 +26,7 @@ module.exports = {
             
             marksSheets.forEach(marksSheet => {
                 response.push({
+                    id: marksSheet._id,
                     title: marksSheet.title,
                     marksArray: marksSheet.marksArray,
                     createdAt: marksSheet.createdAt,

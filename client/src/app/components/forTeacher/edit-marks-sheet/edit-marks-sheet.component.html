@@ -1,0 +1,117 @@
+<div class="card" *ngIf="marksSheet">
+    <h1 class="card-header text-center">
+      Add Marks Sheet
+    </h1>
+    
+    <div class="card-body">
+      <form [formGroup]="marksSheetForm" class="form-group mt-4" (ngSubmit)="onSubmit()">
+        
+        <div class="row mb-2">
+          <div class="col-2">
+            <label for="title"> Title : </label>
+          </div>
+          <div class="col-6">
+            <input type="text" formControlName="title" class="form-control" name="title" [class.invalid-form]="fc.title.errors && (fc.title.dirty || fc.title.touched)">
+          </div>
+          <div *ngIf="fc.title.errors && (fc.title.dirty || fc.title.touched)" class="col-4 text-danger">
+            <div *ngIf="fc.title.errors.required ">
+              Title is required
+            </div>
+          </div>
+        </div>
+        
+        <h5 class="mb-6 mt-4">Enter Marks : </h5>
+        <div formArrayName="marksArray"
+        *ngFor="let mark of marksForm.controls; let i = index;">
+        
+        <div [formGroupName]="i" class="mb-4">
+          
+          <div class="row">
+            
+            <div class="col-md-2">
+              <label for="subject">Subject</label>
+            </div>
+            
+            <div class="col-md-2">
+              <label for="marks">Marks Obtained</label>
+            </div>
+            
+            <div class="col-md-2">
+              <label for="maxMarks">Maximum Marks</label>
+            </div>
+            
+            <div class="col-md-2">
+              <label for="passMarks">Passing Marks</label>
+            </div>
+            
+          </div>
+          
+          <div class="row">
+            
+            <div class="col-md-2">
+              <input type="text" name="subject" formControlName="subject" class="form-control">
+            </div>
+            
+            <div class="col-md-2">
+              <input type="number" name="marks" formControlName="marks" class="form-control">
+            </div>
+            
+            <div class="col-md-2">
+              <input type="number" name="maxMarks" formControlName="maxMarks" class="form-control">
+            </div>
+            
+            <div class="col-md-2">
+              <input type="number" name="passMarks" formControlName="passMarks" class="form-control">
+            </div>
+            
+            <div class="col-md-4">
+              <button (click)="removeMark(i)" class="btn btn-danger" *ngIf="i!==0">Delete</button>
+            </div>
+            
+          </div>
+          
+          <div class="row">
+            
+            <div class="col-md-2 text-danger">
+              <div *ngIf="mark.controls.subject.errors && (mark.controls.subject.dirty || mark.controls.subject.touched)">
+                <div *ngIf="mark.controls.subject.errors.required">
+                  Subject is required
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-2 text-danger">
+              <div *ngIf="mark.controls.marks.errors && (mark.controls.marks.dirty || mark.controls.marks.touched)">
+                <div *ngIf="mark.controls.marks.errors.required">
+                  Marks is required
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      </div>
+      
+      
+      <div class="row mb-4">
+        <div class="col-md-8">
+          
+        </div>
+        
+        <div class="col-md-4 text-right">
+          <button (click)="addMark()" class="btn btn-primary">Add More Marks</button>
+        </div>
+      </div>
+      
+      
+      <div class="row">
+        <div class="col-md-4">
+          <input type="submit" value="Submit" class="btn btn-primary" [disabled]="!marksSheetForm.valid">
+        </div>
+      </div>
+      
+    </form>
+  </div>
+  </div>

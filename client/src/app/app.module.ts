@@ -22,6 +22,7 @@ import { StudentDetailsComponent } from './components/forTeacher/student-details
 import { AddStudentMarksSheetComponent } from './components/forTeacher/add-student-marks-sheet/add-student-marks-sheet.component';
 import { MarksSheetComponent } from './components/marks-sheet/marks-sheet.component';
 import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.component';
+import { EditMarksSheetComponent } from './components/forTeacher/edit-marks-sheet/edit-marks-sheet.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.comp
     StudentDetailsComponent,
     AddStudentMarksSheetComponent,
     MarksSheetComponent,
-    MyMarksComponent
+    MyMarksComponent,
+    EditMarksSheetComponent
   ],
   imports: [
     BrowserModule,

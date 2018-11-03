@@ -28,10 +28,26 @@ export class TeacherService {
   }
 
   addMarksSheet(marksSheet) {
-    return this.http.post(this.baseUrl + 'add_marks_sheet', marksSheet);
+    return this.http.post(this.baseUrl + 'marks_sheet', marksSheet);
   }
 
-  getMarksSheets(id) {
+  getStudentMarksSheets(id) {
+    return this.http.get(this.baseUrl + 'student_marks_sheets', {
+      params: {
+        id: id
+      }
+    });
+  }
+
+  updateMarksSheet(id, data) {
+    return this.http.patch(this.baseUrl + 'marks_sheet/' + id, data);
+  }
+
+  deleteMarksSheet(id) {
+    return this.http.delete(this.baseUrl + 'marks_sheet/' + id);
+  }
+
+  getMarksSheet(id) {
     return this.http.get(this.baseUrl + 'marks_sheet', {
       params: {
         id: id
