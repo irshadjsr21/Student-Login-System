@@ -40,6 +40,15 @@ export class AuthService {
     return this.http.get(this.baseUrl + 'auth/teacher/');
   }
 
+  changePassword(data) {
+    const role = this.whoLoggedIn();
+    if (role === 'student') {
+      return this.http.patch(this.baseUrl + 'auth/student/change_password', data);
+    } else if (role === 'teacher') {
+      return this.http.patch(this.baseUrl + 'auth/teacher/change_password', data);
+    }
+  }
+
   // Helper Functions
   setToken(token) {
     localStorage.setItem('token', token);

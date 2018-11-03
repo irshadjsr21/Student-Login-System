@@ -32,7 +32,7 @@ function duplicateClasses(classes) {
     classes.forEach((clas) => {
         a.push(JSON.stringify(clas));
     });
-
+    
     var counts = [];
     for(var i = 0; i <= a.length; i++) {
         if(counts[a[i]] === undefined) {
@@ -66,7 +66,7 @@ module.exports = {
                 });
             }
             if(teachers.length<=0) {
-
+                
                 if(duplicateClasses(teacher.classes)){
                     return res.status(400).json({
                         msg: [
@@ -74,7 +74,7 @@ module.exports = {
                         ]
                     });
                 }
-
+                
                 Teacher.create(teacher)
                 .then(
                     teacher => {
@@ -143,6 +143,10 @@ module.exports = {
             
             // To Get Details Of Logged In Teacher
             getTeacher: (req,res) => {
+                if(!req.user) {
+                    return ;
+                }
+                
                 Teacher.findById(req.user.id, (error, teacher) => {
                     if(error){
                         console.log(error);
@@ -163,6 +167,52 @@ module.exports = {
                             teacher: teac
                         });
                     }
+                });
+            },
+            
+            
+            // Handle Password Change
+            changePassword: (req, res) => {
+                if(!req.user) {
+                    return ;
+                }
+                
+                Teacher.findById(req.user.id, (error, teacher) => {
+                    if(error){
+                        console.log(error);
+                        return res.status(500).json({
+                            msg: [
+                                "Some Internal Error Occured"
+                            ]
+                        });
+                    }
+                    
+                    teacher.verifyPassword(req.body.password.toString(), (error, isMatch) => {
+                        if(error || !isMatch) {
+                            console.log(error, isMatch);
+                            return res.status(400).json({
+                                msg: [
+                                    "Wrong Password"
+                                ]
+                            });
+                        }
+                        
+                        teacher.password = req.body.newPassword;
+                        teacher.save((error, newTeacher) => {
+                            if(error){
+                                const errorMsg = helperFunctions.extractMongooseErrorMsg(error);
+                                return res.status(400).json({
+                                    msg: errorMsg
+                                });
+                            }
+                            
+                            return res.status(200).json({
+                                msg: [
+                                    "Password Changed Successfully"
+                                ]
+                            });
+                        });
+                    });
                 });
             }
             

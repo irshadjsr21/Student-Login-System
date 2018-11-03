@@ -132,6 +132,51 @@ module.exports = {
                         });
                     }
                 });
+            },
+
+            // Handle Password Change
+            changePassword: (req, res) => {
+                if(!req.user) {
+                    return ;
+                }
+                
+                Student.findById(req.user.id, (error, student) => {
+                    if(error){
+                        console.log(error);
+                        return res.status(500).json({
+                            msg: [
+                                "Some Internal Error Occured"
+                            ]
+                        });
+                    }
+                    
+                    student.verifyPassword(req.body.password.toString(), (error, isMatch) => {
+                        if(error || !isMatch) {
+                            console.log(error, isMatch);
+                            return res.status(400).json({
+                                msg: [
+                                    "Wrong Password"
+                                ]
+                            });
+                        }
+                        
+                        student.password = req.body.newPassword;
+                        student.save((error, newStudent) => {
+                            if(error){
+                                const errorMsg = helperFunctions.extractMongooseErrorMsg(error);
+                                return res.status(400).json({
+                                    msg: errorMsg
+                                });
+                            }
+                            
+                            return res.status(200).json({
+                                msg: [
+                                    "Password Changed Successfully"
+                                ]
+                            });
+                        });
+                    });
+                });
             }
             
         }

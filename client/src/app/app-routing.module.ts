@@ -13,6 +13,7 @@ import { AddStudentMarksSheetComponent } from './components/forTeacher/add-stude
 import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.component';
 import { StudentAuthGuard } from './auth/student-auth.guard';
 import { EditMarksSheetComponent } from './components/forTeacher/edit-marks-sheet/edit-marks-sheet.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,11 @@ const routes: Routes = [
     path: 'teacher/edit_marks_sheet',
     component: EditMarksSheetComponent,
     canActivate: [AuthGuard, TeacherAuthGuard]
+  },
+  {
+    path: 'change_password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

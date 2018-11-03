@@ -23,6 +23,7 @@ import { AddStudentMarksSheetComponent } from './components/forTeacher/add-stude
 import { MarksSheetComponent } from './components/marks-sheet/marks-sheet.component';
 import { MyMarksComponent } from './components/forStudent/my-marks/my-marks.component';
 import { EditMarksSheetComponent } from './components/forTeacher/edit-marks-sheet/edit-marks-sheet.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EditMarksSheetComponent } from './components/forTeacher/edit-marks-shee
     AddStudentMarksSheetComponent,
     MarksSheetComponent,
     MyMarksComponent,
-    EditMarksSheetComponent
+    EditMarksSheetComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

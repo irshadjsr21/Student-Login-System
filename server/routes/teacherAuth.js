@@ -12,4 +12,6 @@ router.post('/login', teacherAuthController.login);
 
 router.get('/', checkAuthentication('teacher'), teacherAuthController.getTeacher);
 
+router.patch('/change_password', checkAuthentication('teacher'), teacherAuthController.changePassword);
+
 module.exports = router;
