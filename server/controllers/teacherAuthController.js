@@ -189,7 +189,6 @@ module.exports = {
                     
                     teacher.verifyPassword(req.body.password.toString(), (error, isMatch) => {
                         if(error || !isMatch) {
-                            console.log(error, isMatch);
                             return res.status(400).json({
                                 msg: [
                                     "Wrong Password"
