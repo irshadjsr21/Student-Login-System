@@ -7,9 +7,12 @@ const helperFunctions = require('../helperFunctions');
 function checkMarks(array) {    
     for(let arrayElement of array) {
         const maxMarks = arrayElement.maxMarks ? arrayElement.maxMarks : 100;
+        const passMarks = arrayElement.passMarks ? arrayElement.passMarks : 40;
         if(arrayElement.marks > maxMarks) {
             return ["Invalid Input (Obtained marks cannot be greater than maximum marks)"];
-            break;
+        }
+        if(arrayElement.passMarks > maxMarks) {
+            return ["Invalid Input (Passing marks cannot be greater than maximum marks)"];
         }
     }
     return null;
@@ -316,6 +319,12 @@ module.exports = {
                 msg: [
                     "Invalid Input"
                 ]
+            });
+        }
+
+        if(checkMarks(req.body.marksArray)) {
+            return res.status(400).json({
+                msg: checkMarks(req.body.marksArray)
             });
         }
         
